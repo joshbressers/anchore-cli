@@ -34,6 +34,7 @@ def setup_config(cli_opts):
         "jsonmode": False,
         "debug": False,
         "as_account": None,
+        "headers": [],
     }
 
     settings = {}
@@ -50,6 +51,7 @@ def setup_config(cli_opts):
         "ANCHORE_CLI_DEBUG",
         "ANCHORE_CLI_ACCOUNT",
         "ANCHORE_CLI_CONFIG",
+        "ANCHORE_CLI_HEADERS",
     ]:
         if e in os.environ:
             settings[e] = os.environ[e]
@@ -150,6 +152,9 @@ def setup_config(cli_opts):
             ret["debug"] = True
     if "ANCHORE_CLI_ACCOUNT" in settings:
         ret["as_account"] = settings["ANCHORE_CLI_ACCOUNT"]
+    if "ANCHORE_CLI_HEADERS" in settings:
+        for h in settings["ANCHORE_CLI_HEADERS"].split(";"):
+            ret["headers"].append(h)
 
     return ret
 

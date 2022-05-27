@@ -31,6 +31,11 @@ def set_account_header(config):
     else:
         header_overrides.pop("x-anchore-account", None)
 
+    if config["headers"]:
+        for header in config["headers"]:
+            (h, v) = header.split(':')
+            header_overrides[h.strip()] = v.strip()
+
 
 def get_base_routes(config):
     userId = config["user"]
